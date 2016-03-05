@@ -68,14 +68,6 @@ if #tasks > 1 then
                 end
             end
         end
-        if start then
-            --line(points[1].x,points[1].y,points[2].x,points[2].y)
-            line(points[1].x,points[1].y,points[3].x,points[3].y)
-            line(points[3].x,points[3].y,points[2].x,points[2].y)
-            fontSize(25)
-            --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
-            text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[2].y+points[1].y)/3+(starti.y%2+1)*(-1)*HEIGHT/5+HEIGHT/5*1.5)
-        end
             if start then
                 stroke(255)
                 strokeWidth(5)
