@@ -218,7 +218,11 @@ function draw()
         --Draw Time
         text((hours*60).."min.",WIDTH/6.8,HEIGHT/8)
 
-        --Draw Done
+        --Draw "_ hours"
+        text(hours, )
+        text("hrs", )
+
+        -- Draw "DONE"
         text("DONE",WIDTH/6.8,HEIGHT/11)
 
         --Dividing line
