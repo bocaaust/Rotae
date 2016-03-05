@@ -45,6 +45,17 @@ function draw()
         --summation of times into total
         for i,x in ipairs(tasks) do
             total = total + idTime[x]
+            textMode(CORNER)
+            --Pick random seed based off of id
+            math.randomseed(x)
+            fill(0,0,0,125)
+            rect(WIDTH/9.7,HEIGHT-HEIGHT/16*i-HEIGHT/64,WIDTH/8,HEIGHT/17)
+            --Pick random color (150-255) is in pastel range
+            temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
+            stroke(temp)
+            fill(temp)
+            text(idName[x],WIDTH/8,HEIGHT-HEIGHT/16*i)
+            textMode(CENTER)
         end
         starti = vec2(0,0)
 
@@ -104,7 +115,7 @@ function draw()
             fontSize(40)
             --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
         end
-    
+
     end
 
    --Check if we are on select screen
