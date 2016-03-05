@@ -26,10 +26,14 @@ function setup()
     increase=0
     decrease=0
     temp = color(0,0,0,255)
+    hasTouched == false
 end
 
 -- This function gets called once every frame
 function draw()
+    if CurrentTouch.state != ENDED and hasTouched == false then
+        hasTouched = true
+    end
     -- This sets a dark background color
     background(253, 202, 150, 255)
     
