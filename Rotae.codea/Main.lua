@@ -249,6 +249,4 @@ function draw()
         if screen ==2 then
             
         end
-        
-    end
-    
+end
