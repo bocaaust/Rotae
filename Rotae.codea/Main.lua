@@ -136,12 +136,18 @@ function draw()
                 --add 30 minute interval
                 hours += 0.5
                 --reset flag
+                increase=0
             end
 
             --Decrease is more complicated - we have to check if
                 --the hours is 0.5 or less to avoid negatives
 
-            if decrease == 1 
+            if decrease == 1 and hours >=0.5 then
+                --get rid of 30 minute interval
+                hours -= 0.5
+                --reset flag
+                decrease=0
+            end
         else
             --Check if we are touching the right half of the screen
             if CurrentTouch.x > WIDTH /2 then
