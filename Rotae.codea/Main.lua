@@ -30,63 +30,67 @@ end
 function draw()
     -- This sets a dark background color 
     background(253, 202, 150, 255)
+
+    --Check if we are on the task screen
     if screen == 0 then
-    --points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH*3/4,HEIGHT/2)}
-    start = true
-    stroke(255)
-    fill(125)
-    ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
-    i = 0
-    total = 0
---summation of times into total
-    for i,x in ipairs(tasks) do
-        total = total + idTime[x]
-    end
-    starti = vec2(0,0)
+        --points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH*3/4,HEIGHT/2)}
+        start = true
 
---Check if we have more than one task
-if #tasks > 1 then
-    while i <= math.pi*2+.03 do
-        if start then
-            start = false
-            starti.x = i
-            starti.y = starti.y + 1
-            points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))}
-
-            --Pick random start position
-            math.randomseed(tasks[starti.y])
-
-            --Pick random color (150-255) is in pastel range
-            temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
-            stroke(temp)
-            fill(temp)
-        else
-        --comparison between position difference over total of circle and time section over summation of time
-            if i-starti.x > 0 then
-                if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
-                    start = true
-                    points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
-                end
-            end
+        --Draw circle with white outline
+        stroke(255)
+        fill(125)
+        ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
+        i = 0
+        total = 0
+        --summation of times into total
+        for i,x in ipairs(tasks) do
+            total = total + idTime[x]
         end
-            if start then
-                stroke(255)
-                fill(255)
-                strokeWidth(5)
-                line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
-                line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
-                fontSize(25)
-                --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
-                text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
+        starti = vec2(0,0)
+
+        --Check if we have more than one task
+        if #tasks > 1 then
+            while i <= math.pi*2+.03 do
+                if start then
+                    start = false
+                    starti.x = i
+                    starti.y = starti.y + 1
+                    points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))}
+
+                    --Pick random start position
+                    math.randomseed(tasks[starti.y])
+
+                    --Pick random color (150-255) is in pastel range
+                    temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
+                    stroke(temp)
+                    fill(temp)
+                else
+                --comparison between position difference over total of circle and time section over summation of time
+                    if i-starti.x > 0 then
+                        if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
+                            start = true
+                            points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+                        end
+                    end
+                end
+                    if start then
+                        stroke(255)
+                        strokeWidth(5)
+                        line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
+                        line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+                        --line(points[3].x,points[3].y,points[2].x,points[2].y)
+                        fontSize(25)
+                        --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
+                        text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
+                    end
+                ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
+                i = i +.01
             end
-        ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
-        i = i +.01
+        else
+        fontSize(40*6)
+            text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
+        end
     end
-    else
-    fontSize(40*6)
-        text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
-    end
-   end
 
    --Check if we are on select screen
     if screen == 1 then
@@ -95,21 +99,20 @@ if #tasks > 1 then
         if CurrentTouch.state == ENDED then
             touching = 0
         else
+            --Check if we are touching the right half of the screen
+            if CurrentTouch.x > WIDTH /2 then
 
-        --Check if we are touching the right half of the screen
-        if CurrentTouch.x > WIDTH /2 then
-
-            --Check if we are touching the plus or the minus
-            if CurrentTouch.y > HEIGHT/2 then
-                --"+"
-                touching = 1
-            else
-                -- "-"
-                touching = 2
+                --Check if we are touching the plus or the minus
+                if CurrentTouch.y > HEIGHT/2 then
+                    --"+"
+                    touching = 1
+                else
+                    -- "-"
+                    touching = 2
+                end
             end
-        end
     
-    end
+        end
 
         --Set stroke color to white and a thin line
         stroke(255)
@@ -122,11 +125,17 @@ if #tasks > 1 then
         if touching == 1 then
             fill(202,253,150,230)
         end
+
+        --Plus rectangle
         rect(WIDTH/2,HEIGHT/2,WIDTH/2,HEIGHT/2)
+
+        --Pastel green fill
         fill(202,253,150,255)
         if touching == 2 then
             fill(202,253,150,230)
         end
+
+        --Minus rectangle
         rect(WIDTH/2,0,WIDTH/2,HEIGHT/2)
 
         --Pastel yellow fill
