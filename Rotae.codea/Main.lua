@@ -129,6 +129,12 @@ function draw()
 
         --Check if touch ended
         if CurrentTouch.state == ENDED then
+            if touching == 3 then
+                --Process Event
+                table.insert(tasks,math.random(100000,9999999))
+                idTime[tasks[#tasks]] = hours*60
+                screen = 3
+            end
             touching = 0
 
             --Check flags
@@ -208,6 +214,11 @@ function draw()
         text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
         text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
         text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
+
+        --Draw Time
+        text((hours*60).."min.",WIDTH/6.8,HEIGHT/8)
+
+        --Draw Done
         text("DONE",WIDTH/6.8,HEIGHT/11)
 
         --Dividing line
@@ -221,6 +232,10 @@ function draw()
         --Draw -
         fontSize(240)
         text("-",WIDTH*3/4,HEIGHT/4)
+
+    end
+
+    if screen = 3 then
 
     end
     
