@@ -16,7 +16,7 @@ function setup()
     i = 0
     total = 0
     x = 0
-    screen = 0
+    screen = 1
     rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
@@ -134,7 +134,7 @@ function draw()
             --Check flags
             if increase == 1 then
                 --add 30 minute interval
-                hours += 0.5
+                hours = hours+ 0.5
                 --reset flag
                 increase=0
             end
@@ -144,7 +144,7 @@ function draw()
 
             if decrease == 1 and hours >=0.5 then
                 --get rid of 30 minute interval
-                hours -= 0.5
+                hours = hours- 0.5
                 --reset flag
                 decrease=0
             end
