@@ -18,6 +18,9 @@ function setup()
     rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
+    hours=0
+    increase=0
+    decrease=0
 end
 
 -- This function gets called once every frame
@@ -73,11 +76,19 @@ else
         text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
     end
    end
+
+   --Check if we are on select screen
     if screen == 1 then
+
+        --Check if touch ended
         if CurrentTouch.state == ENDED then
             touching = 0
         else
+
+        --Check if we are touching the right half of the screen
         if CurrentTouch.x > WIDTH /2 then
+
+            --Check if we are touching the plus or the minus
             if CurrentTouch.y > HEIGHT/2 then
                 --"+"
                 touching = 1
@@ -86,10 +97,17 @@ else
                 touching = 2
             end
         end
-        end
+    
+    end
+
+        --Set stroke color to white and a thin line
         stroke(255)
         strokeWidth(5)
+
+        --Pastel green fill
         fill(202,253,150,255)
+
+        --If touching rectangle, make it darker
         if touching == 1 then
             fill(202,253,150,230)
         end
@@ -99,15 +117,20 @@ else
             fill(202,253,150,230)
         end
         rect(WIDTH/2,0,WIDTH/2,HEIGHT/2)
+
+        --Pastel yellow fill
         fill(253,253,150,255)
         rect(0,0,WIDTH/2,HEIGHT/4)
         fill(255)
         fontSize(70)
+        --Draw instructional text
         textMode(CORNER)
         text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
         text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
         text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
         text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
+
+        --Dividing line
         line(0,HEIGHT/2,WIDTH/2,HEIGHT/2)
         textMode(CENTER)
         fontSize(180)
