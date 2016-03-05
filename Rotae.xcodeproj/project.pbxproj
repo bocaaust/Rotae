@@ -55,6 +55,7 @@
 		DBEA4FCA1BC243D800000A55 /* LaunchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEA4FC61BC243D800000A55 /* LaunchLogo@2x.png */; };
 		DBEA4FCB1BC243D800000A55 /* LaunchLogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEA4FC71BC243D800000A55 /* LaunchLogo@3x.png */; };
 		DBF0F5A91A3D0B78007693C1 /* iAdsAddon.m in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F5A71A3D0B78007693C1 /* iAdsAddon.m */; };
+		FCA259AA1C8B80F30061FCB5 /* KozGoPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FCA259A91C8B80F30061FCB5 /* KozGoPro-Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		DBF4436A170F02580026A109 /* lobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lobject.h; sourceTree = "<group>"; };
 		DBF4436B170F02580026A109 /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
 		DBF4436C170F02580026A109 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
+		FCA259A91C8B80F30061FCB5 /* KozGoPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KozGoPro-Light.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +248,7 @@
 		DB8A009F16F2E859005F87A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FCA259A91C8B80F30061FCB5 /* KozGoPro-Light.otf */,
 				DB5578F21BB9185E0024F638 /* Assets */,
 				DB8A00A016F2E859005F87A6 /* Inconsolata.otf */,
 				DB8A00A116F2E859005F87A6 /* SourceSansPro-Bold.otf */,
@@ -354,6 +357,7 @@
 				DB8A00A516F2E859005F87A6 /* SourceSansPro-Bold.otf in Resources */,
 				DBEA4FCA1BC243D800000A55 /* LaunchLogo@2x.png in Resources */,
 				DB5578F31BB9185E0024F638 /* Assets in Resources */,
+				FCA259AA1C8B80F30061FCB5 /* KozGoPro-Light.otf in Resources */,
 				DBEA4FC31BC23A0200000A55 /* Launch Screen.storyboard in Resources */,
 				DBEA4FC91BC243D800000A55 /* LaunchLogo.png in Resources */,
 				DB8A00A616F2E859005F87A6 /* SourceSansPro-Regular.otf in Resources */,

@@ -3,7 +3,7 @@ displayMode(FULLSCREEN)
 -- Use this function to perform your initial setup
 function setup()
     tasks = {11111,22222}
-
+    font("KozGoPro-Light")
     idName = {}
     idTime = {}
     idName[tasks[1]] = "test"
@@ -23,7 +23,7 @@ end
 -- This function gets called once every frame
 function draw()
     -- This sets a dark background color 
-    background(151, 171, 171, 255)
+    background(253, 202, 150, 255)
     if screen == 0 then
     --points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH*3/4,HEIGHT/2)}
     start = true
@@ -69,7 +69,7 @@ if #tasks > 1 then
         i = i +.01
     end
 else
-    fontSize(40)
+    fontSize(40*6)
         text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
     end
    end
@@ -89,25 +89,25 @@ else
         end
         stroke(255)
         strokeWidth(5)
-        fill(230)
+        fill(202,253,150,255)
         if touching == 1 then
-            fill(180)
+            fill(202,253,150,230)
         end
         rect(WIDTH/2,HEIGHT/2,WIDTH/2,HEIGHT/2)
-        fill(230)
+        fill(202,253,150,255)
         if touching == 2 then
-            fill(180)
+            fill(202,253,150,230)
         end
         rect(WIDTH/2,0,WIDTH/2,HEIGHT/2)
-        fill(99,99,59,255)
+        fill(253,253,150,255)
         rect(0,0,WIDTH/2,HEIGHT/4)
-        fill(120)
+        fill(255)
         fontSize(70)
         textMode(CORNER)
-        text("Estimate",WIDTH/8,HEIGHT*7.1/8)
-        text("how long",WIDTH/8,HEIGHT*6.4/8)
-        text("your task",WIDTH/8,HEIGHT*5.7/8)
-        text("will take",WIDTH/8,HEIGHT*5/8)
+        text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
+        text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
+        text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
+        text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
         line(0,HEIGHT/2,WIDTH/2,HEIGHT/2)
         textMode(CENTER)
         fontSize(180)

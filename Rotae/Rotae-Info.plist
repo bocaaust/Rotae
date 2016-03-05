@@ -30,6 +30,7 @@
 	<string>This app requires the use of location services</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>KozGoPro-Light.otf</string>
 		<string>Inconsolata.otf</string>
 		<string>SourceSansPro-Bold.otf</string>
 		<string>SourceSansPro-Regular.otf</string>
