@@ -19,14 +19,30 @@ function draw()
     i = 0
     total = 0
     for i,x in ipairs(tasks) do
-        idTime[tasks]
+        total = total + idTime[tasks]
     end
+    starti = vec2(0,0)
+if #tasks > 1 then
     while i <= math.pi*2 do
         if start then
             start = false
+            starti.x = i
+            starti.y = starti.y + 1
             points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/2*math.cos(i),HEIGHT/2+HEIGHT/2*math.sin(i))}
+        else
+            if (starti.x + i)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
+                start = true
+                points[3] = vec2(WIDTH/2+HEIGHT/2*math.cos(i),HEIGHT/2+HEIGHT/2*math.sin(i))
+            end
         end
-        i = i +.5
+            if start then
+                
+            end
+        i = i +.1
+    end
+else
+    fontSize(40)
+        text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
     end
     -- This sets the line thickness
     strokeWidth(5)
