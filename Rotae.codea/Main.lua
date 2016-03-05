@@ -23,6 +23,7 @@ function setup()
     hours=0
     increase=0
     decrease=0
+    temp = color(0,0,0,255)
 end
 
 -- This function gets called once every frame
@@ -70,13 +71,13 @@ if #tasks > 1 then
         end
             if start then
                 stroke(255)
+                fill(255)
                 strokeWidth(5)
                 line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
                 line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
-                --line(points[3].x,points[3].y,points[2].x,points[2].y)
                 fontSize(25)
                 --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
-                text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[2].y+points[1].y)/3+(starti.y%2+1)*(-1)*HEIGHT/5+HEIGHT/5*1.5)
+                text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
             end
         ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
         i = i +.01
