@@ -208,6 +208,8 @@ function draw()
         text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
         text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
         text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
+
+        -- Draw "DONE"
         text("DONE",WIDTH/6.8,HEIGHT/11)
 
         --Dividing line
