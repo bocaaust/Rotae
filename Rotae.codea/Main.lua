@@ -11,8 +11,8 @@ function setup()
     idName[tasks[2]] = "test2"
     idTime[tasks[2]] = 30
     idName[tasks[3]] = "test3"
-    idTime[tasks[3]] = 30
-    starti = vec2(0,0)
+    idTime[tasks[3]] = 45
+    starti = vec3(0,0,0)
     i = 0
     total = 0
     x = 0
@@ -57,7 +57,7 @@ function draw()
             text(idName[x],WIDTH/8,HEIGHT-HEIGHT/16*i)
             textMode(CENTER)
         end
-        starti = vec2(0,0)
+        starti = vec3(0,0,0)
 
         --Check if we have more than one task
         if #tasks > 1 then
@@ -108,7 +108,13 @@ function draw()
                 stroke(temp)
                 fill(temp)
                 strokeWidth(0)
-                ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
+                if (i-starti.z)/(2*math.pi) >= 30/total then
+                    fill(0,0,0,130)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),20)
+                    starti.z = i
+                else
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
+                end
                 i = i +.01
             end
         else
