@@ -212,8 +212,12 @@ function draw()
         --Dividing line
         line(0,HEIGHT/2,WIDTH/2,HEIGHT/2)
         textMode(CENTER)
+
+        --Draw +
         fontSize(180)
         text("+",WIDTH*3/4,HEIGHT/4*3)
+
+        --Draw -
         fontSize(240)
         text("-",WIDTH*3/4,HEIGHT/4)
 
