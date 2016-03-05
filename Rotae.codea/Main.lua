@@ -2,7 +2,7 @@
 displayMode(FULLSCREEN)
 -- Use this function to perform your initial setup
 function setup()
-    tasks = {11111,22222}
+    tasks = {11111,22222,3333}
     font("KozGoPro-Light")
     idName = {}
     idTime = {}
@@ -10,11 +10,13 @@ function setup()
     idTime[tasks[1]] = 30
     idName[tasks[2]] = "test2"
     idTime[tasks[2]] = 30
+    idName[tasks[3]] = "test3"
+    idTime[tasks[3]] = 30
     starti = vec2(0,0)
     i = 0
     total = 0
     x = 0
-    screen = 1
+    screen = 0
     rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
@@ -58,9 +60,11 @@ if #tasks > 1 then
         end
         end
             if start then
-                --line(points[1].x,points[1].y,points[2].x,points[2].y)
-                line(points[1].x,points[1].y,points[3].x,points[3].y)
-                line(points[3].x,points[3].y,points[2].x,points[2].y)
+                stroke(255)
+                strokeWidth(5)
+                line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
+                line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+                --line(points[3].x,points[3].y,points[2].x,points[2].y)
                 fontSize(25)
                 --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
                 text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[2].y+points[1].y)/3+(starti.y%2+1)*(-1)*HEIGHT/5+HEIGHT/5*1.5)
