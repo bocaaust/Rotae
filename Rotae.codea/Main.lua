@@ -40,6 +40,8 @@ function draw()
         total = total + idTime[x]
     end
     starti = vec2(0,0)
+
+--Check if we have more than one task
 if #tasks > 1 then
     while i <= math.pi*2+.03 do
         if start then
@@ -47,31 +49,35 @@ if #tasks > 1 then
             starti.x = i
             starti.y = starti.y + 1
             points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))}
+
+            --Pick random start position
             math.randomseed(tasks[starti.y])
+
+            --Pick random color (150-255) is in pastel range
             temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
             stroke(temp)
             fill(temp)
         else
---comparison between position difference over total of circle and time section over summation of time
-        if i-starti.x > 0 then
-            if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
-                start = true
-                points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+        --comparison between position difference over total of circle and time section over summation of time
+            if i-starti.x > 0 then
+                if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
+                    start = true
+                    points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+                end
             end
         end
+        if start then
+            --line(points[1].x,points[1].y,points[2].x,points[2].y)
+            line(points[1].x,points[1].y,points[3].x,points[3].y)
+            line(points[3].x,points[3].y,points[2].x,points[2].y)
+            fontSize(25)
+            --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
+            text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[2].y+points[1].y)/3+(starti.y%2+1)*(-1)*HEIGHT/5+HEIGHT/5*1.5)
         end
-            if start then
-                --line(points[1].x,points[1].y,points[2].x,points[2].y)
-                line(points[1].x,points[1].y,points[3].x,points[3].y)
-                line(points[3].x,points[3].y,points[2].x,points[2].y)
-                fontSize(25)
-                --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
-                text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[2].y+points[1].y)/3+(starti.y%2+1)*(-1)*HEIGHT/5+HEIGHT/5*1.5)
-            end
         ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
         i = i +.01
     end
-else
+    else
     fontSize(40*6)
         text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
     end
