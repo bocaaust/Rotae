@@ -124,6 +124,18 @@ function draw()
         --Check if touch ended
         if CurrentTouch.state == ENDED then
             touching = 0
+
+            --Check flags
+            if increase == 1 then
+                --add 30 minute interval
+                hours += 0.5
+                --reset flag
+            end
+
+            --Decrease is more complicated - we have to check if
+                --the hours is 0.5 or less to avoid negatives
+
+            if decrease == 1 
         else
             --Check if we are touching the right half of the screen
             if CurrentTouch.x > WIDTH /2 then
@@ -132,9 +144,18 @@ function draw()
                 if CurrentTouch.y > HEIGHT/2 then
                     --"+"
                     touching = 1
+
+                    --Set "increase" flag to ON
+                    increase=1
+                    decrease=0
                 else
                     -- "-"
                     touching = 2
+
+                    --Set "decrease" flag to ON
+                    --"Flags" prevent unexpected results in increase/decrease
+                    decrease=1
+                    increase=0
                 end
             end
     
