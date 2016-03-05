@@ -177,6 +177,8 @@ function draw()
                     decrease=1
                     increase=0
                 end
+
+            --Check if touching "DONE" button
             elseif CurrentTouch.y <= HEIGHT/4 then
                     touching = 3
                 end
