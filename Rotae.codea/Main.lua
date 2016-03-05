@@ -57,7 +57,7 @@ function draw()
                     starti.y = starti.y + 1
                     points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))}
 
-                    --Pick random start position
+                    --Pick random seed based off of id
                     math.randomseed(tasks[starti.y])
 
                     --Pick random color (150-255) is in pastel range
@@ -74,22 +74,37 @@ function draw()
                     end
                 end
                     if start then
+                        --Pick random seed based off of id
+                        math.randomseed(tasks[starti.y])
+
+                        --Pick random color (150-255) is in pastel range
+                        temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
                         stroke(255)
+                        fill(temp)
                         strokeWidth(5)
                         line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
                         line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                         --line(points[3].x,points[3].y,points[2].x,points[2].y)
                         fontSize(25)
                         --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
-                        text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
+                        --text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
                     end
+                --Pick random seed based off of id
+                math.randomseed(tasks[starti.y])
+
+                --Pick random color (150-255) is in pastel range
+                temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
+                stroke(temp)
+                fill(temp)
+                strokeWidth(0)
                 ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
                 i = i +.01
             end
         else
-        fontSize(40*6)
-            text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
+            fontSize(40)
+            --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
         end
+    
     end
 
    --Check if we are on select screen
