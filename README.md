@@ -6,3 +6,6 @@ Each large task is a "wheel", and each wheel is broken into 30-minute segments. 
 
 ##Tech Specs
 This project was built using Codea, a simplistic yet powerful version of Lua that allows easy deployment to iOS.
+
+##What's with the name?
+"Rotae" is Latin for "wheels", the core UI element of our project.
