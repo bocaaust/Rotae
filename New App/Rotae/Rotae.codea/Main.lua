@@ -578,9 +578,10 @@ end
 
 function removeFirstTask()
     --If wheel still spinning, STOP before proceeding
-    if stopgo == true
+    if stopgo == true then
         stopgo = false
-
+    end
+    
     --Remove the task, the id, and the name from tables
     table.remove(tasks, 1)
     table.remove(idName,1)
