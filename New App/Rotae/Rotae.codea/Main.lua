@@ -4,7 +4,7 @@ displayMode(FULLSCREEN)
 function setup()
     --tasks = {11111,22222,333333}
     tasks = {}
-    font("KozGoPro-Light")
+    --font("KozGoPro-Light")
     idName = {}
     input = ""
     idTime = {}
@@ -13,7 +13,7 @@ function setup()
     total = 0
     cTime = 0
     x = 0
-    screen = 0
+    screen = 1
     rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
@@ -24,10 +24,12 @@ function setup()
     hasTouched = false
     stopgo = true
     timego = 0
+    touchbegan = true
 end
 
 -- This function gets called once every frame
 function draw()
+    if CurrentTouch.state == ENDED then touchbegan  = true end
     if CurrentTouch.state == BEGAN and hasTouched == false then
         hasTouched = true
     end
@@ -43,7 +45,7 @@ function draw()
         stroke(255)
         fill(125)
         ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
-
+        
         i = 0
         total = 0
         --summation of times into total
@@ -83,7 +85,9 @@ function draw()
                     starti.x = i
                     starti.y = starti.y + 1
                     points = {vec2(WIDTH/2,HEIGHT/2),vec2(i,i)}
-                    
+                    if starti.y > #tasks then
+                        starti.y = #tasks
+                    end
                     --Pick random seed based off of id
                     math.randomseed(tasks[starti.y])
                     
@@ -136,7 +140,7 @@ function draw()
             end
         else
             while i <= math.pi*2+.07 do
-                if #tasks == 1 then
+                --if #tasks == 1 then
                 --Pick random seed based off of id
                 math.randomseed(tasks[1])
                 
@@ -155,25 +159,36 @@ function draw()
                 -- fontSize(40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
                 i = i +.01
-                else
-                    fill(0)
-                    fontSize(40)
-                    text("Tap + to add a task",WIDTH/2,HEIGHT/2)
-                end
+                -- else
+                --  fill(255, 255, 255, 255)
+                --  fontSize(40)
+                --   text("Tap + to add a task",WIDTH/2,HEIGHT/2)
+                --  screen = 1
+                -- end
             end
         end
-
+        if #tasks == 0 then
+            screen = 1
+        end
         --checks time flag
         if stopgo then
             --iterates a frame forward
             timego = timego +1/60
             tint(255)
             sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/3)
+            if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
+                touchbegan = false
+                stopgo = false
+            end
         else
+            if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
+                touchbegan = false
+                stopgo = true
+            end
             sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/3)
         end
     end
-
+    
     --Check if we are on select screen
     if screen == 1 then
         --Check if touch ended
@@ -230,7 +245,7 @@ function draw()
             elseif CurrentTouch.y <= HEIGHT/4 then
                 touching = 3
             end
-
+            
         end
         
         --Set stroke color to white and a thin line
@@ -296,19 +311,31 @@ function draw()
     
     --Name task screen
     if screen ==2 then
-
+        
         --Draw header
         fill(0)
         text("Enter your task here: ",WIDTH/2,2*HEIGHT/3)
-
+        
         --Show keyboard
         if isKeyboardShowing()== false then
-            showKeyboard()
+            if textSize(input) > 0 then
+                --  if string.find(input,RETURN) ~= nil then
+                
+                -- end
+                idName[tasks[#tasks]] = string.gsub(input,RETURN,"")
+                screen = 0
+                hideKeyboard()
+                input = ""
+                showKeyboard()
+                hideKeyboard()
+            else
+                showKeyboard()
+            end
         end
-
+        
         --Get keyboard input
         input = keyboardBuffer()
-
+        
         --Draw input box
         fill(255)
         stroke(125)
@@ -318,15 +345,16 @@ function draw()
         text(input,WIDTH/2,HEIGHT/4*3)
     end
     
-
+    
 end
 
 function keyboard(key)
     --Hide the keyboard and go to main screen
     --  if RETURN entered
     if key == RETURN then
-        idName[tasks[#tasks]] = input
+        idName[tasks[#tasks]] = string.gsub(input,RETURN,"")
         screen = 0
         hideKeyboard()
+        input = ""
     end
 end
