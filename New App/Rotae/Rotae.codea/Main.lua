@@ -432,8 +432,10 @@ function keyboard(key)
     end
 end
 
+--Task completion notification
 window1 = class()
 
+--Initialize
 function window1:init(tasks,identity,names,times)
     showing = true
     deleting = false
@@ -444,29 +446,41 @@ function window1:init(tasks,identity,names,times)
     speech.say("Time to take a break")
 end
 
+--Draw window
 function window1:draw()
+    --Black screen
     fill(0,0,0,35)
     rectMode(CORNER)
     rect(0,0,WIDTH,HEIGHT)
+    
+    --White box
     fill(255)
     rectMode(CENTER)
     rect(WIDTH/2,HEIGHT*3/4,WIDTH/8,HEIGHT/4)
+    
+    --Black text
     fill(0)
     text("You Completed a Task",WIDTH/2,HEIGHT/4*3.4)
     text("Do You Need More Time",WIDTH/2,HEIGHT/4*3)
 end
 
+--check if window can close
 function window1:canClose()
+    --If tapped, make it go away
     if CurrentTouch.state == BEGAN then
         showing = false
     end
     return showing
 end
 
+--Close function
 function window1:close()
+
+    --Check if tasks are to be cleared
     if deleting then
         for i,x in ipairs(t) do
             if x == id then
+                --Clear tasks
                 table.remove(n,x)
                 table.remove(ti,x)
                 table.remove(t,i)
@@ -486,7 +500,7 @@ function window1:close3()
 end
 
 
-
+--Break notification
 window2 = class()
 
 function window2:init()
@@ -495,23 +509,31 @@ function window2:init()
 end
 
 function window2:draw()
+    --Black screen
     fill(0,0,0,35)
     rectMode(CORNER)
     rect(0,0,WIDTH,HEIGHT)
+
+    --White box
     fill(255)
     rectMode(CENTER)
     rect(WIDTH/2,HEIGHT*3/4,WIDTH/4,HEIGHT/4)
+
+    --Black text
     fill(0)
     textMode(CENTER)
     text("Time to take a break",WIDTH/2,HEIGHT/4*3.4)
     text("Tap to Continue",WIDTH/2,HEIGHT/4*3)
     textMode(CORNER)
     rectMode(CORNER)
+
+    --check if touching
     if CurrentTouch.state == BEGAN then
         showing = false
     end
 end
 
+--Window can only close if it was opened in the first place!
 function window2:canClose()
     return showing
 end
