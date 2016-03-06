@@ -273,10 +273,20 @@ function draw()
     
     --Name task screen
     if screen ==2 then
+
+        --Draw header
+        fill(0)
+        text("Enter your task here: ",WIDTH/2,2*HEIGHT/3)
+
+        --Show keyboard
         if isKeyboardShowing()== false then
             showKeyboard()
         end
+
+        --Get keyboard input
         input = keyboardBuffer()
+
+        --Draw input box
         fill(255)
         stroke(125)
         rect(WIDTH/4,HEIGHT*3/4-HEIGHT/32,WIDTH/2,HEIGHT/16)
@@ -289,6 +299,8 @@ function draw()
 end
 
 function keyboard(key)
+    --Hide the keyboard and go to main screen
+    --  if RETURN entered
     if key == RETURN then
         idName[tasks[#tasks]] = input
         screen = 0
