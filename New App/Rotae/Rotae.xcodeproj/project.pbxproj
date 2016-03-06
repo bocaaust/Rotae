@@ -494,7 +494,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a319517a-0de4-48d8-9a8b-88637e4a6112";
+				PROVISIONING_PROFILE = "5af6e3e1-05ef-4f4d-af3b-a847f56c7dfe";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -519,7 +519,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a319517a-0de4-48d8-9a8b-88637e4a6112";
+				PROVISIONING_PROFILE = "5af6e3e1-05ef-4f4d-af3b-a847f56c7dfe";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
