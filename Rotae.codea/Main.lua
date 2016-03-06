@@ -71,7 +71,9 @@ function draw()
             temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
             stroke(temp)
             fill(temp)
+            --Print task name
             text(idName[x].." ",WIDTH/8,HEIGHT-HEIGHT/16*counter)
+            --reset text mode
             textMode(CENTER)
             counter = counter + 1
         end
@@ -168,6 +170,7 @@ function draw()
             if touching == 3 and hours > 0 then
                 --Process Event
                 tasks[#tasks+1] = math.random(100000,999999)
+                --Convert minutes to seconds
                 idTime[tasks[#tasks]] = hours*60
                 screen = 2
             end
