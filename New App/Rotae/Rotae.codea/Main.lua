@@ -171,6 +171,16 @@ function draw()
                 else
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10)
                 end
+
+                --Before we go to the next frame, check if timego-cTime is equal to start time of second task in seconds
+                if timego-cTime == idTime[tasks[2]]*60 then
+                    --stop
+                    stopgo=false
+
+                    --launch window 1
+                    temp2=window1
+                    showWindow=true
+                end
                 i = i +.01
             end
 
