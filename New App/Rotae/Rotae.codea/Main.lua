@@ -228,10 +228,6 @@ function draw()
                 --launch window 1
                 temp2=window1
                 showWindow=true
-
-                --If extra time selected, automatically add a single 15 minute long task
-
-                --Else, delete the final task
             end
 
         end
@@ -491,7 +487,14 @@ end
 function window1:canClose()
     --If tapped, make it go away
     if CurrentTouch.state == BEGAN then
-
+        --Check where tapped
+        --If "yes" tapped, add 15 mins to first task
+        if CurrentTouch.x < WIDTH/2 then
+            idTime[tasks[1] = idTime[tasks[1] + 15
+        --If "no" tapped, remove first task
+        else
+            removeFirstTask()
+        end
         showing = false
     end
     return showing
@@ -561,4 +564,16 @@ end
 --Window can only close if it was opened in the first place!
 function window2:canClose()
     return showing
+end
+
+function removeFirstTask()
+    --If wheel still spinning, STOP before proceeding
+    if stopgo == true
+        stopgo = false
+
+    --Remove the task, the id, and the name from tables
+    table.remove(tasks, 1)
+    table.remove(idName,1)
+    table.remove(idTime,1)
+
 end
