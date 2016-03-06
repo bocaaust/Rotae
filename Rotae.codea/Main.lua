@@ -207,7 +207,7 @@ function draw()
             elseif CurrentTouch.y <= HEIGHT/4 then
                 touching = 3
             end
-            
+
         end
         
         --Set stroke color to white and a thin line
