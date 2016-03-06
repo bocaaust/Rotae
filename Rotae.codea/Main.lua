@@ -1,24 +1,24 @@
-
 -- Rotae
 displayMode(FULLSCREEN)
 -- Use this function to perform your initial setup
 function setup()
-    tasks = {11111,22222,3333}
+    tasks = {11111,22222,33333}
     font("KozGoPro-Light")
     idName = {}
     input = ""
     idTime = {}
     idName[tasks[1]] = "test"
-    idTime[tasks[1]] = 30
+    idTime[tasks[1]] = 10
     idName[tasks[2]] = "test2"
-    idTime[tasks[2]] = 30
+    idTime[tasks[2]] = 10
     idName[tasks[3]] = "test3"
-    idTime[tasks[3]] = 45
+    idTime[tasks[3]] = 10
     starti = vec3(0,0,0)
     i = 0
     total = 0
+    cTime = ElapsedTime
     x = 0
-    screen = 1
+    screen = 0
     rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
@@ -26,12 +26,12 @@ function setup()
     increase=0
     decrease=0
     temp = color(0,0,0,255)
-    hasTouched == false
+    hasTouched = false
 end
 
 -- This function gets called once every frame
 function draw()
-    if CurrentTouch.state != ENDED and hasTouched == false then
+    if CurrentTouch.state == BEGAN and hasTouched == false then
         hasTouched = true
     end
     -- This sets a dark background color
@@ -49,19 +49,21 @@ function draw()
         i = 0
         total = 0
         --summation of times into total
+        counter = 1
         for i,x in ipairs(tasks) do
-            total = total + idTime[x]
+            total = total + idTime[tasks[i]]
             textMode(CORNER)
             --Pick random seed based off of id
             math.randomseed(x)
             fill(0,0,0,125)
-            rect(WIDTH/9.7,HEIGHT-HEIGHT/16*i-HEIGHT/64,WIDTH/8,HEIGHT/17)
+            rect(WIDTH/9.7,HEIGHT-HEIGHT/16*i-HEIGHT/64,WIDTH/27+textSize(idName[tasks[i]]),HEIGHT/17)
             --Pick random color (150-255) is in pastel range
             temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
             stroke(temp)
             fill(temp)
-            text(idName[x],WIDTH/8,HEIGHT-HEIGHT/16*i)
+            text(idName[x].." ",WIDTH/8,HEIGHT-HEIGHT/16*counter)
             textMode(CENTER)
+            counter = counter + 1
         end
         starti = vec3(0,0,0)
         
@@ -99,8 +101,9 @@ function draw()
                     stroke(255)
                     fill(temp)
                     strokeWidth(5)
-                    line(WIDTH/2,HEIGHT/2,points[2].x,points[2].y)
-                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
+                    line(WIDTH/2,HEIGHT/2,points[2].x+math.cos((ElapsedTime-cTime)/(total*60)),points[2].y+math.sin((ElapsedTime-cTime)/(total*60)))
+                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)))
+                    --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
                     fontSize(25)
                     --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
@@ -116,16 +119,34 @@ function draw()
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),10)
                 end
                 i = i +.01
             end
         else
-            fontSize(40)
-            --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
+            while i <= math.pi*2+.07 do
+                --Pick random seed based off of id
+                math.randomseed(tasks[1])
+                
+                --Pick random color (150-255) is in pastel range
+                temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
+                stroke(temp)
+                fill(temp)
+                strokeWidth(0)
+                if (i-starti.z)/(2*math.pi) >= 30/total then
+                    fill(0,0,0,130)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),20)
+                    starti.z = i
+                else
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/total),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/total),10)
+                end
+                -- fontSize(40)
+                --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
+                i = i +.01
+            end
         end
         
     end
@@ -135,9 +156,9 @@ function draw()
         
         --Check if touch ended
         if CurrentTouch.state == ENDED then
-            if touching == 3 then
+            if touching == 3 and hours > 0 then
                 --Process Event
-                table.insert(tasks,math.random(100000,9999999))
+                tasks[#tasks+1] = math.random(100000,999999)
                 idTime[tasks[#tasks]] = hours*60
                 screen = 2
             end
@@ -181,77 +202,96 @@ function draw()
                     decrease=1
                     increase=0
                 end
-
-            --Check if touching "DONE" button
-            elseif CurrentTouch.y <= HEIGHT/4 then
-                    touching = 3
-                end
                 
+                --Check if touching "DONE" button
+            elseif CurrentTouch.y <= HEIGHT/4 then
+                touching = 3
             end
-            
-            --Set stroke color to white and a thin line
-            stroke(255)
-            strokeWidth(5)
-            
-            --Pastel green fill
-            fill(202,253,150,255)
-            
-            --If touching rectangle, make it darker
-            if touching == 1 then
-                fill(202,253,150,230)
-            end
-            
-            --Plus rectangle
-            rect(WIDTH/2,HEIGHT/2,WIDTH/2,HEIGHT/2)
-            
-            --Pastel green fill
-            fill(202,253,150,255)
-            if touching == 2 then
-                fill(202,253,150,230)
-            end
-            
-            --Minus rectangle
-            rect(WIDTH/2,0,WIDTH/2,HEIGHT/2)
-            
-            --Pastel yellow fill
-            fill(253,253,150,255)
-            if touching == 3 then
-                fill(223, 223, 119, 255)
-            end
-            rect(0,0,WIDTH/2,HEIGHT/4)
-            fill(255)
-            fontSize(70)
-            --Draw instructional text
-            textMode(CORNER)
-            text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
-            text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
-            text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
-            text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
-            
-            --Draw Time
-            textMode(CENTER)
-            text((math.floor(hours*60)).." min.",WIDTH/4,HEIGHT/2.7)
-            textMode(CORNER)
-            
-            -- Draw "DONE"
-            text("DONE",WIDTH/6.8,HEIGHT/11)
-            
-            --Dividing line
-            line(0,HEIGHT/2,WIDTH/2,HEIGHT/2)
-            textMode(CENTER)
-            
-            --Draw +
-            fontSize(180)
-            text("+",WIDTH*3/4,HEIGHT/4*3)
-            
-            --Draw -
-            fontSize(240)
-            text("-",WIDTH*3/4,HEIGHT/4)
             
         end
         
-        --Name task screen
-        if screen ==2 then
-            
+        --Set stroke color to white and a thin line
+        stroke(255)
+        strokeWidth(5)
+        
+        --Pastel green fill
+        fill(202,253,150,255)
+        
+        --If touching rectangle, make it darker
+        if touching == 1 then
+            fill(202,253,150,230)
         end
+        
+        --Plus rectangle
+        rect(WIDTH/2,HEIGHT/2,WIDTH/2,HEIGHT/2)
+        
+        --Pastel green fill
+        fill(202,253,150,255)
+        if touching == 2 then
+            fill(202,253,150,230)
+        end
+        
+        --Minus rectangle
+        rect(WIDTH/2,0,WIDTH/2,HEIGHT/2)
+        
+        --Pastel yellow fill
+        fill(253,253,150,255)
+        if touching == 3 then
+            fill(223, 223, 119, 255)
+        end
+        rect(0,0,WIDTH/2,HEIGHT/4)
+        fill(255)
+        fontSize(70)
+        --Draw instructional text
+        textMode(CORNER)
+        text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
+        text("how long",WIDTH/8,HEIGHT*6.4/8-HEIGHT*.3/8)
+        text("your task",WIDTH/8,HEIGHT*5.7/8-HEIGHT*.3/8)
+        text("will take",WIDTH/8,HEIGHT*5/8-HEIGHT*.3/8)
+        
+        --Draw Time
+        textMode(CENTER)
+        text((math.floor(hours*60)).." min.",WIDTH/4,HEIGHT/2.7)
+        textMode(CORNER)
+        
+        -- Draw "DONE"
+        text("DONE",WIDTH/6.8,HEIGHT/11)
+        
+        --Dividing line
+        line(0,HEIGHT/2,WIDTH/2,HEIGHT/2)
+        textMode(CENTER)
+        
+        --Draw +
+        fontSize(180)
+        text("+",WIDTH*3/4,HEIGHT/4*3)
+        
+        --Draw -
+        fontSize(240)
+        text("-",WIDTH*3/4,HEIGHT/4)
+        
+    end
+    
+    --Name task screen
+    if screen ==2 then
+        if isKeyboardShowing()== false then
+            showKeyboard()
+        end
+        input = keyboardBuffer()
+        fill(255)
+        stroke(125)
+        rect(WIDTH/4,HEIGHT*3/4-HEIGHT/32,WIDTH/2,HEIGHT/16)
+        fill(0)
+        fontSize(20)
+        text(input,WIDTH/2,HEIGHT/4*3)
+    end
+    
+    rect(WIDTH*2/4,HEIGHT/2,50,50)
+end
+
+function keyboard(key)
+    if key == RETURN then
+        idName[tasks[#tasks]] = input
+        screen = 0
+        hideKeyboard()
+    end
 end
