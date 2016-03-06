@@ -177,7 +177,7 @@ function draw()
             end
 
             --Before we go to the next frame, check if timego-cTime is equal to start time of second task in seconds
-            if timego-cTime == idTime[tasks[#tasks-1]]*60 then
+            if timego-cTime == idTime[tasks[#tasks]]*60 then
                 --stop
                 stopgo=false
 
