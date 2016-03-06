@@ -27,6 +27,8 @@ function setup()
     decrease=0
     temp = color(0,0,0,255)
     hasTouched = false
+    stopgo = false
+    timego = ElapsedTime
 end
 
 -- This function gets called once every frame
@@ -46,6 +48,14 @@ function draw()
         stroke(255)
         fill(125)
         ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
+
+        --checks time flag
+        if stopgo then
+        --iterates a frame forward
+            timego = timego +1/60
+
+        end
+
         i = 0
         total = 0
         --summation of times into total
@@ -153,7 +163,6 @@ function draw()
     
     --Check if we are on select screen
     if screen == 1 then
-        
         --Check if touch ended
         if CurrentTouch.state == ENDED then
             if touching == 3 and hours > 0 then
