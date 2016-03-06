@@ -4,7 +4,7 @@ displayMode(FULLSCREEN)
 function setup()
     --tasks = {11111,22222,333333}
     tasks = {}
-    --font("KozGoPro-Light")
+    font("KozGoPro-Light")
     idName = {}
     input = ""
     timecheck = ElapsedTime-3
@@ -16,6 +16,7 @@ function setup()
     cTime = 0
     x = 0
     screen = 1
+    checkTime = ElapsedTime - 3
     touching = 0
     rectMode(CORNER)
     hours=0
@@ -105,6 +106,13 @@ function draw()
                 if start then
                     start = false
                     starti.x = i
+                    --if ElapsedTime-checkTime > 3 then
+
+                    --if math.cos(i) >= .99 then
+                    --launch window 1
+                   -- temp3=window1(tasks,tasks[starti.y],idName,idTime)
+                    --showWindow2 =true
+                  --  end
                     starti.y = starti.y + 1
                     points = {vec2(WIDTH/2,HEIGHT/2),vec2(i,i)}
                     if starti.y > #tasks then
@@ -121,13 +129,18 @@ function draw()
                     --comparison between position difference over total of circle and time section over summation of time
                     if i-starti.x > 0 then
                         if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
-                            start = true
-                            if WIDTH/2+HEIGHT/4*math.cos((i)+(timego-cTime)/(total*60)*2*math.pi) then
-                                showWindow2 = true
-                                temp3 = window1(tasks,tasks[starti.y],idName,idTime)
+                            if math.cos(i+(timego-cTime)/(total*60)) >= .99 and temp3 == nil then
+                            --launch window 1
+                                temp3=window1(tasks,tasks[starti.y],idName,idTime)
+                                showWindow2 =true
+                            else
+                                temp3 = nil
+
                             end
+
+                            start = true
                             points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
-                        end
+
                     end
                 end
                 if start then
@@ -142,9 +155,9 @@ function draw()
                     stroke(255)
                     fill(temp)
                     strokeWidth(5)
-                    if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.03 then
-                    showWindow2= true
-                    end
+                    --if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.03 then
+                    --showWindow2= true
+                    --end
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
@@ -188,13 +201,11 @@ function draw()
             end
 
             --Before we go to the next frame, check if timego-cTime is equal to start time of second task in seconds
-            if timego-cTime == idTime[tasks[#tasks]]*60 then
+            if timego-cTime == idTime[tasks[#tasks]] then
                 --stop
                 stopgo=false
 
-                --launch window 1
-                --temp3=window1
-               -- showWindow2=true
+
             end
 
         --Only one task left
@@ -447,7 +458,7 @@ function draw()
         end
     end
 
-    if showWindow2 then
+    if showWindow2 and temp3 ~= nil then
         temp3:draw()
         showWindow2 = temp3:canClose()
         if CurrentTouch.state == BEGAN then
@@ -456,6 +467,7 @@ function draw()
             idName = temp3:close2()
             idTime = temp3:close3()
             temp3 = nil
+            checkTime = ElapsedTime
         end
     end
     backup()
@@ -493,12 +505,15 @@ function window1:init(tasks,identity,names,times)
     t = tasks
     id = identity
     n = names
+    yes = true
     ti = times
     --speech.say("Time to take a break")
 end
 
 --Draw window
 function window1:draw()
+    if showing and yes and id ~= nil then
+    textMode(CENTER)
     --Black screen
     fill(0,0,0,35)
     rectMode(CORNER)
@@ -507,7 +522,7 @@ function window1:draw()
     --White box
     fill(255)
     rectMode(CENTER)
-    rect(WIDTH/2,HEIGHT*3/4,WIDTH/4,HEIGHT/4)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/3,HEIGHT/4)
     
     --Black text
     fill(0)
@@ -517,20 +532,28 @@ function window1:draw()
     text("No",WIDTH/2+WIDTH/24,HEIGHT/4*2.6)
 
     rectMode(CORNER)
+    textMode(CORNER)
+    end
 end
 
 --check if window can close
 function window1:canClose()
     --If tapped, make it go away
+    if id == nil then
+    showing = false
+    return false
+    else
     if CurrentTouch.state == BEGAN then
         --Check where tapped
         --If "yes" tapped, add 15 mins to first task
         if CurrentTouch.x < WIDTH/2 then
-            for y,x, in ipairs(t) do
-                if x == id then
-                    t[y] = t[y]+15
-                end
-            end
+            --for y,x in ipairs(t) do
+                --if x == id then
+                    ti[id] = ti[id]+15
+                    showing = false
+                    yes = false
+                --end
+           -- end
             --idTime[tasks[1]] = idTime[tasks[1]] + 15
         --If "no" tapped, remove first task
         else
@@ -538,7 +561,12 @@ function window1:canClose()
     end
         showing = false
     end
+    if yes == false then
+        return false
+    else
     return showing
+    end
+    end
 end
 
 --Close function
@@ -549,13 +577,17 @@ function window1:close()
         for i,x in ipairs(t) do
             if x == id then
                 --Clear tasks
-                table.remove(n,x)
-                table.remove(ti,x)
+                n[x] = nil
+                ti[x] = nil
+                --table.remove(n,x)
+               -- table.remove(ti,x)
                 table.remove(t,i)
                 break
             end
         end
+        deleting = false
     end
+    showing = false
     return t
 end
 
