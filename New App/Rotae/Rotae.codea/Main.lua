@@ -500,7 +500,7 @@ function window1:canClose()
         --Check where tapped
         --If "yes" tapped, add 15 mins to first task
         if CurrentTouch.x < WIDTH/2 then
-            idTime[tasks[1] = idTime[tasks[1] + 15
+            idTime[tasks[1]] = idTime[tasks[1]] + 15
         --If "no" tapped, remove first task
         else
             removeFirstTask()
