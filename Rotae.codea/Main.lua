@@ -16,7 +16,7 @@ function setup()
     starti = vec3(0,0,0)
     i = 0
     total = 0
-    cTime = ElapsedTime
+    cTime = 0
     x = 0
     screen = 0
     rollodex = vec3(0,30)
@@ -27,8 +27,8 @@ function setup()
     decrease=0
     temp = color(0,0,0,255)
     hasTouched = false
-    stopgo = false
-    timego = ElapsedTime
+    stopgo = true
+    timego = 0
 end
 
 -- This function gets called once every frame
@@ -48,13 +48,15 @@ function draw()
         stroke(255)
         fill(125)
         ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
-
+        
         --checks time flag
         if stopgo then
         --iterates a frame forward
             timego = timego +1/60
-
+            tint(255)
+            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/8)
         end
+         sprite("Project:Go",WIDTH/2,HEIGHT/4*3,HEIGHT/4)
 
         i = 0
         total = 0
