@@ -174,7 +174,7 @@ function draw()
                 i = i +.01
             end
 
-
+        --Only one task left
         else
             while i <= math.pi*2+.07 do
                 if temp2 ~= nil and CurrentTouch.state == BEGAN then
@@ -217,6 +217,16 @@ function draw()
                 --   text("Tap + to add a task",WIDTH/2,HEIGHT/2)
                 --  screen = 1
                 -- end
+            end
+            --Check if the endpoint of the task and the point at the current time are equal
+            --We do this RIGHT BEFORE the 
+            --Point at RIGHT edge - (1,0), cos = 1, sin = 0
+            if math.cos((timego-cTime)/(total*60)*2*math.pi) == 0.999 and math.sin((timego-cTime)/(total*60)*2*math.pi) == -0.001 then
+                --launch window 1
+
+                --If extra time selected, automatically add a single 15 minute long task
+
+                --Else, delete the final task
             end
 
         end
@@ -476,9 +486,6 @@ end
 function window1:canClose()
     --If tapped, make it go away
     if CurrentTouch.state == BEGAN then
-
-        --Check where tap is
-
 
         showing = false
     end
