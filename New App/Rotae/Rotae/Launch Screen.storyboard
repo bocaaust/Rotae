@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="P7B-Eb-v8Y">
-                                <rect key="frame" x="129" y="272" width="343" height="57"/>
+                                <rect key="frame" x="129" y="213" width="343" height="175"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="343" id="SGw-Db-bqu"/>
                                 </constraints>
@@ -48,6 +48,6 @@
     </scenes>
     <resources>
         <image name="LaunchBackground.png" width="128" height="128"/>
-        <image name="LaunchLogo.png" width="343" height="57"/>
+        <image name="LaunchLogo.png" width="343" height="175"/>
     </resources>
 </document>
