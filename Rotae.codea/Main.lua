@@ -2,7 +2,7 @@
 displayMode(FULLSCREEN)
 -- Use this function to perform your initial setup
 function setup()
-    tasks = {11111,22222,33333}
+    tasks = {11111,22222,333333}
     font("KozGoPro-Light")
     idName = {}
     input = ""
@@ -141,7 +141,7 @@ function draw()
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/total),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/total),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),10)
                 end
                 -- fontSize(40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
