@@ -79,7 +79,7 @@ function draw()
                     start = false
                     starti.x = i
                     starti.y = starti.y + 1
-                    points = {vec2(WIDTH/2,HEIGHT/2),vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))}
+                    points = {vec2(WIDTH/2,HEIGHT/2),vec2(i,i)}
                     
                     --Pick random seed based off of id
                     math.randomseed(tasks[starti.y])
@@ -106,8 +106,8 @@ function draw()
                     stroke(255)
                     fill(temp)
                     strokeWidth(5)
-                    line(WIDTH/2,HEIGHT/2,points[2].x+math.cos((timego-cTime)/(total*60)),points[2].y+math.sin((timego-cTime)/(total*60)))
-                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)))
+                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
+                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
                     fontSize(25)
@@ -124,10 +124,10 @@ function draw()
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10)
                 end
                 i = i +.01
             end
@@ -143,10 +143,10 @@ function draw()
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),10)
                 end
                 -- fontSize(40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
@@ -265,7 +265,7 @@ function draw()
         
         --Draw Time
         textMode(CENTER)
-        text((math.floor(hours*60)).." min.",WIDTH/4,HEIGHT/2.7)
+        text((math.floor(hours*60)*2*math.pi).." min.",WIDTH/4,HEIGHT/2.7)
         textMode(CORNER)
         
         -- Draw "DONE"
@@ -309,7 +309,7 @@ function draw()
         text(input,WIDTH/2,HEIGHT/4*3)
     end
     
-    rect(WIDTH*2/4,HEIGHT/2,50,50)
+
 end
 
 function keyboard(key)
