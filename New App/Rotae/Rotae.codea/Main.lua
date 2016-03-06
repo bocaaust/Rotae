@@ -1,9 +1,9 @@
 -- Rotae
-displayMode(FULLSCREEN)
+displayMode(FULLSCREEN_NO_BUTTONS)
 
 -- Use this function to perform your initial setup
 function setup()
-    clearLocalData()
+    --clearLocalData()
     --tasks = {11111,22222,333333}
     tasks = {}
     font("KozGoPro-Light")
@@ -278,8 +278,8 @@ end
         --checks time flag
         if stopgo then
             --iterates a frame forward
-            --timego = timego +1/60
-            timego = timego+1
+            timego = timego +1/60
+            --timego = timego+1
             tint(255)
             sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/4)
             if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
