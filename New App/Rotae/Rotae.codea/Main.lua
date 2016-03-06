@@ -346,7 +346,18 @@ function draw()
     end
     
     
+backup()
 end
+
+function backup()
+    saveLocalData("size",#tasks)
+    for i,x in ipairs(tasks) do
+        saveLocalData(i.."id",x)
+        saveLocalData(i.."name",idName(x))
+        saveLocalData(i.."time",idTime[x])
+    end
+end
+
 
 function keyboard(key)
     --Hide the keyboard and go to main screen
