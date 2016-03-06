@@ -469,8 +469,11 @@ function window1:draw()
     
     --Black text
     fill(0)
-    text("You Completed a Task",WIDTH/2,HEIGHT/4*3.4)
-    text("Do You Need More Time",WIDTH/2,HEIGHT/4*3)
+    text("You Completed a Task!",WIDTH/2,HEIGHT/4*3.4)
+    text("Do You Need More Time?",WIDTH/2,HEIGHT/4*3)
+    text("Yes",WIDTH/2-WIDTH/16,HEIGHT/4*2.6)
+    text("No",WIDTH/2+WIDTH/16,HEIGHT/4*2.6)
+
 end
 
 --check if window can close
@@ -531,6 +534,7 @@ function window2:draw()
     --Black text
     fill(0)
     textMode(CENTER)
+
     text("Time to take a break",WIDTH/2,HEIGHT/4*3.4)
     text("Tap to Continue",WIDTH/2,HEIGHT/4*3)
     textMode(CORNER)
