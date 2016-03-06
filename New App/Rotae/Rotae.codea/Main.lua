@@ -124,7 +124,7 @@ function draw()
                             start = true
                             if WIDTH/2+HEIGHT/4*math.cos((i)+(timego-cTime)/(total*60)*2*math.pi) then
                                 showWindow2 = true
-                                temp2 = window1(tasks,tasks[starti.y],idName,idTime)
+                                temp3 = window1(tasks,tasks[starti.y],idName,idTime)
                             end
                             points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                         end
@@ -193,8 +193,8 @@ function draw()
                 stopgo=false
 
                 --launch window 1
-                temp2=window1
-                showWindow=true
+                --temp3=window1
+               -- showWindow2=true
             end
 
         --Only one task left
@@ -249,8 +249,8 @@ function draw()
                 stopgo=false
 
                 --launch window 1
-                temp2=window1
-                showWindow=true
+                --temp3=window1
+                --showWindow2=true
             end
 
         end
@@ -447,7 +447,17 @@ function draw()
         end
     end
 
-    if showWindow2
+    if showWindow2 then
+        temp3:draw()
+        showWindow2 = temp3:canClose()
+        if CurrentTouch.state == BEGAN then
+            showWindow2 = false
+            tasks = temp3:close()
+            idName = temp3:close2()
+            idTime = temp3:close3()
+            temp3 = nil
+        end
+    end
     backup()
 end
 
@@ -484,7 +494,7 @@ function window1:init(tasks,identity,names,times)
     id = identity
     n = names
     ti = times
-    speech.say("Time to take a break")
+    --speech.say("Time to take a break")
 end
 
 --Draw window
@@ -497,7 +507,7 @@ function window1:draw()
     --White box
     fill(255)
     rectMode(CENTER)
-    rect(WIDTH/2,HEIGHT*3/4,WIDTH/8,HEIGHT/4)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/4,HEIGHT/4)
     
     --Black text
     fill(0)
@@ -506,6 +516,7 @@ function window1:draw()
     text("Yes",WIDTH/2-WIDTH/24,HEIGHT/4*2.6)
     text("No",WIDTH/2+WIDTH/24,HEIGHT/4*2.6)
 
+    rectMode(CORNER)
 end
 
 --check if window can close
@@ -515,11 +526,16 @@ function window1:canClose()
         --Check where tapped
         --If "yes" tapped, add 15 mins to first task
         if CurrentTouch.x < WIDTH/2 then
-            idTime[tasks[1]] = idTime[tasks[1]] + 15
+            for y,x, in ipairs(t) do
+                if x == id then
+                    t[y] = t[y]+15
+                end
+            end
+            --idTime[tasks[1]] = idTime[tasks[1]] + 15
         --If "no" tapped, remove first task
         else
-            removeFirstTask()
-        end
+            deleting = true
+    end
         showing = false
     end
     return showing
@@ -557,7 +573,7 @@ window2 = class()
 
 function window2:init()
     showing = true
-    speech.say("Time to take a break")
+    --speech.say("Time to take a break")
 end
 
 function window2:draw()
