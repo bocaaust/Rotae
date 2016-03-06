@@ -274,7 +274,7 @@ function draw()
         
         --Pastel yellow fill
         fill(253,253,150,255)
-        if touching == 3 then
+        if touching == 3 and hasTouched then
             fill(223, 223, 119, 255)
         end
         rect(0,0,WIDTH/2,HEIGHT/4)
