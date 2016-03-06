@@ -226,7 +226,7 @@ function draw()
             --timego = timego +1/60
             timego = timego+1
             tint(255)
-            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/3)
+            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/4)
             if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
                 touchbegan = false
                 stopgo = false
@@ -236,7 +236,7 @@ function draw()
                 touchbegan = false
                 stopgo = true
             end
-            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/3)
+            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/4)
         end
         sprite("Project:HandArrow",WIDTH*3/4,HEIGHT/2.18,WIDTH/8)
     end
