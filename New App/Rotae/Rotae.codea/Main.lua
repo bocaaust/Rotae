@@ -471,8 +471,8 @@ function window1:draw()
     fill(0)
     text("You Completed a Task!",WIDTH/2,HEIGHT/4*3.4)
     text("Do You Need More Time?",WIDTH/2,HEIGHT/4*3)
-    text("Yes",WIDTH/2-WIDTH/16,HEIGHT/4*2.6)
-    text("No",WIDTH/2+WIDTH/16,HEIGHT/4*2.6)
+    text("Yes",WIDTH/2-WIDTH/24,HEIGHT/4*2.6)
+    text("No",WIDTH/2+WIDTH/24,HEIGHT/4*2.6)
 
 end
 
@@ -480,6 +480,10 @@ end
 function window1:canClose()
     --If tapped, make it go away
     if CurrentTouch.state == BEGAN then
+
+        --Check where tap is
+
+
         showing = false
     end
     return showing
