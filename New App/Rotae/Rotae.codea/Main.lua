@@ -142,7 +142,7 @@ function draw()
                     stroke(255)
                     fill(temp)
                     strokeWidth(5)
-                    if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDHT/2+HEIGHT/4-.03 then
+                    if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.03 then
                     showWindow2= true
                     end
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
@@ -446,6 +446,8 @@ function draw()
             showWindow = false
         end
     end
+
+    if showWindow2
     backup()
 end
 
