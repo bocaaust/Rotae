@@ -7,6 +7,7 @@ function setup()
     --font("KozGoPro-Light")
     idName = {}
     input = ""
+    timecheck = ElapsedTime-3
     idTime = {}
     starti = vec3(0,0,0)
     i = 0
@@ -44,7 +45,7 @@ function receive()
             end
         end
     end
-
+    
 end
 
 -- This function gets called once every frame
@@ -149,12 +150,20 @@ function draw()
                 stroke(temp)
                 fill(temp)
                 strokeWidth(0)
+                if temp2 ~= nil and CurrentTouch.state == BEGAN then
+                    showWindow = false
+                    temp2 = nil
+                    timecheck = ElapsedTime
+                end
                 if (i-starti.z)/(2*math.pi) >= 30/total then
-                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) == WIDTH/2+HEIGHT/4 then
+                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.02 and temp2 == nil and showWindow == false and ElapsedTime-timecheck > 3 then
                         --stops time
                         stopgo = false
-                        temp2 = window2()
+                        if temp2 == nil then
+                            temp2 = window2()
+                        end
                         showWindow = true
+                        i = i - .06
                     end
                     fill(0,0,0,130)
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20)
@@ -166,6 +175,11 @@ function draw()
             end
         else
             while i <= math.pi*2+.07 do
+                if temp2 ~= nil and CurrentTouch.state == BEGAN then
+                    showWindow = false
+                    temp2 = nil
+                    timecheck = ElapsedTime
+                end
                 --if #tasks == 1 then
                 --Pick random seed based off of id
                 math.randomseed(tasks[1])
@@ -176,13 +190,16 @@ function draw()
                 fill(temp)
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
-                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) == WIDTH/2+HEIGHT/4 then
-                    --stops time
+                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.02 and temp2 == nil and ElapsedTime-timecheck > 3 then
+                        --stops time
+                        i = i - .08
                         stopgo = false
-                        temp2 = window2()
+                        if temp2 == nil then
+                            temp2 = window2()
+                        end
                         showWindow = true
                     end
-
+                    
                     fill(0,0,0,130)
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),20)
                     starti.z = i
@@ -383,8 +400,14 @@ function draw()
     if showWindow then
         temp2:draw()
         showWindow = temp2:canClose()
+        if CurrentTouch.state == BEGAN or showWindow == false then
+            
+            temp2 = nil
+            timecheck = ElapsedTime
+            showWindow = false
+        end
     end
-backup()
+    backup()
 end
 
 function backup()
@@ -467,26 +490,28 @@ end
 window2 = class()
 
 function window2:init()
-showing = true
-speech.say("Time to take a break")
+    showing = true
+    speech.say("Time to take a break")
 end
 
 function window2:draw()
-fill(0,0,0,35)
-rectMode(CORNER)
-rect(0,0,WIDTH,HEIGHT)
-fill(255)
-rectMode(CENTER)
-rect(WIDTH/2,HEIGHT*3/4,WIDTH/8,HEIGHT/4)
-fill(0)
-text("Time to take a break",WIDTH/2,HEIGHT/4*3.4)
-text("Tap to Continue",WIDTH/2,HEIGHT/4*3)
+    fill(0,0,0,35)
+    rectMode(CORNER)
+    rect(0,0,WIDTH,HEIGHT)
+    fill(255)
+    rectMode(CENTER)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/4,HEIGHT/4)
+    fill(0)
+    textMode(CENTER)
+    text("Time to take a break",WIDTH/2,HEIGHT/4*3.4)
+    text("Tap to Continue",WIDTH/2,HEIGHT/4*3)
+    textMode(CORNER)
+    rectMode(CORNER)
+    if CurrentTouch.state == BEGAN then
+        showing = false
+    end
 end
 
 function window2:canClose()
-if CurrentTouch.state == BEGAN then
-showing = false
+    return showing
 end
-return showing
-end
-
