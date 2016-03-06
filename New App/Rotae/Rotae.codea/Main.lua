@@ -222,6 +222,9 @@ function draw()
             --We do this RIGHT BEFORE the 
             --Point at RIGHT edge - (1,0), cos = 1, sin = 0
             if math.cos((timego-cTime)/(total*60)*2*math.pi) == 0.999 and math.sin((timego-cTime)/(total*60)*2*math.pi) == -0.001 then
+                --stop
+                stopgo=false
+
                 --launch window 1
 
                 --If extra time selected, automatically add a single 15 minute long task
