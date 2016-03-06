@@ -173,6 +173,8 @@ function draw()
                 end
                 i = i +.01
             end
+
+
         else
             while i <= math.pi*2+.07 do
                 if temp2 ~= nil and CurrentTouch.state == BEGAN then
@@ -216,6 +218,11 @@ function draw()
                 --  screen = 1
                 -- end
             end
+            if i>math.pi*2+.07 then
+                stopgo=false
+                window1.draw()
+            end
+
         end
         if #tasks == 0 then
             screen = 1
@@ -239,6 +246,8 @@ function draw()
             sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/4)
         end
         sprite("Project:HandArrow",WIDTH*3/4,HEIGHT/2.18,WIDTH/8)
+        
+        
     end
     
     --Check if we are on select screen
