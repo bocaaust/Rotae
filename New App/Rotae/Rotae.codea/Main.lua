@@ -48,15 +48,6 @@ function draw()
         stroke(255)
         fill(125)
         ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
-        
-        --checks time flag
-        if stopgo then
-        --iterates a frame forward
-            timego = timego +1/60
-            tint(255)
-            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/8)
-        end
-         sprite("Project:Go",WIDTH/2,HEIGHT/4*3,HEIGHT/4)
 
         i = 0
         total = 0
@@ -115,8 +106,8 @@ function draw()
                     stroke(255)
                     fill(temp)
                     strokeWidth(5)
-                    line(WIDTH/2,HEIGHT/2,points[2].x+math.cos((ElapsedTime-cTime)/(total*60)),points[2].y+math.sin((ElapsedTime-cTime)/(total*60)))
-                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)))
+                    line(WIDTH/2,HEIGHT/2,points[2].x+math.cos((timego-cTime)/(total*60)),points[2].y+math.sin((timego-cTime)/(total*60)))
+                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
                     fontSize(25)
@@ -133,10 +124,10 @@ function draw()
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),10)
                 end
                 i = i +.01
             end
@@ -152,19 +143,28 @@ function draw()
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),20)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((ElapsedTime-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((ElapsedTime-cTime)/(total*60)),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)),10)
                 end
                 -- fontSize(40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
                 i = i +.01
             end
         end
-        
+
+        --checks time flag
+        if stopgo then
+            --iterates a frame forward
+            timego = timego +1/60
+            tint(255)
+            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/3)
+        else
+            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/3)
+        end
     end
-    
+
     --Check if we are on select screen
     if screen == 1 then
         --Check if touch ended
