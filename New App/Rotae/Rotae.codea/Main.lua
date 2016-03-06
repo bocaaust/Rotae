@@ -31,6 +31,7 @@ function setup()
         screen = 0
     end
     showWindow = false
+    showWindow2 = false
 end
 
 function receive()
@@ -121,11 +122,18 @@ function draw()
                     if i-starti.x > 0 then
                         if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
                             start = true
+                            if WIDTH/2+HEIGHT/4*math.cos((i)+(timego-cTime)/(total*60)*2*math.pi) then
+                                showWindow2 = true
+                                temp2 = window1(tasks,tasks[starti.y],idName,idTime)
+                            end
                             points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                         end
                     end
                 end
                 if start then
+                    
+            
+                    
                     --Pick random seed based off of id
                     math.randomseed(tasks[starti.y])
                     
