@@ -2,17 +2,12 @@
 displayMode(FULLSCREEN)
 -- Use this function to perform your initial setup
 function setup()
-    tasks = {11111,22222,333333}
+    --tasks = {11111,22222,333333}
+    tasks = {}
     font("KozGoPro-Light")
     idName = {}
     input = ""
     idTime = {}
-    idName[tasks[1]] = "test"
-    idTime[tasks[1]] = 10
-    idName[tasks[2]] = "test2"
-    idTime[tasks[2]] = 10
-    idName[tasks[3]] = "test3"
-    idTime[tasks[3]] = 10
     starti = vec3(0,0,0)
     i = 0
     total = 0
@@ -67,9 +62,17 @@ function draw()
             --Print task name
             text(idName[x].." ",WIDTH/8,HEIGHT-HEIGHT/16*counter)
             --reset text mode
-            textMode(CENTER)
             counter = counter + 1
         end
+        fill(0,0,0,125)
+        textMode(CORNER)
+        rect(WIDTH/9.7,HEIGHT-HEIGHT/16*counter-HEIGHT/64,WIDTH/27+textSize("+"),HEIGHT/17)
+        fill(255)
+        text("+",WIDTH/8,HEIGHT-HEIGHT/16*counter)
+        if CurrentTouch.x <= WIDTH/9.7+textSize("+")+WIDTH/27 and CurrentTouch.y > HEIGHT-HEIGHT/16*counter-HEIGHT/64 and CurrentTouch.y < HEIGHT-HEIGHT/16*counter-HEIGHT/64 + HEIGHT/17 and CurrentTouch.state == ENDED then
+            screen = 1
+        end
+        textMode(CENTER)
         starti = vec3(0,0,0)
         
         --Check if we have more than one task
@@ -133,6 +136,7 @@ function draw()
             end
         else
             while i <= math.pi*2+.07 do
+                if #tasks == 1 then
                 --Pick random seed based off of id
                 math.randomseed(tasks[1])
                 
@@ -151,6 +155,11 @@ function draw()
                 -- fontSize(40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
                 i = i +.01
+                else
+                    fill(0)
+                    fontSize(40)
+                    text("Tap + to add a task",WIDTH/2,HEIGHT/2)
+                end
             end
         end
 
@@ -180,18 +189,18 @@ function draw()
             
             --Check flags
             if increase == 1 then
-                --add 30 minute interval
-                hours = hours+ 0.5
+                --add 15 minute interval
+                hours = hours+ 0.25
                 --reset flag
                 increase=0
             end
             
             --Decrease is more complicated - we have to check if
-            --the hours is 0.5 or less to avoid negatives
+            --the hours is 0.25 or less to avoid negatives
             
-            if decrease == 1 and hours >=0.5 then
+            if decrease == 1 and hours >=0.25 then
                 --get rid of 30 minute interval
-                hours = hours- 0.5
+                hours = hours- 0.25
                 --reset flag
                 decrease=0
             end
@@ -265,7 +274,7 @@ function draw()
         
         --Draw Time
         textMode(CENTER)
-        text((math.floor(hours*60)*2*math.pi).." min.",WIDTH/4,HEIGHT/2.7)
+        text((math.floor(hours*60)).." min.",WIDTH/4,HEIGHT/2.7)
         textMode(CORNER)
         
         -- Draw "DONE"
