@@ -11,10 +11,10 @@ function setup()
     starti = vec3(0,0,0)
     i = 0
     total = 0
+    speech.rate = .3
     cTime = 0
     x = 0
     screen = 1
-    rollodex = vec3(0,30)
     touching = 0
     rectMode(CORNER)
     hours=0
@@ -23,8 +23,28 @@ function setup()
     temp = color(0,0,0,255)
     hasTouched = false
     stopgo = true
-    timego = 0
+    timego = readLocalData("timego",0)
     touchbegan = true
+    receive()
+    if #tasks > 0 then
+        screen = 0
+    end
+    showWindow = false
+end
+
+function receive()
+    size = readLocalData("size",-1)
+    if size > 0 then
+        for i = 1,size do
+            x = readLocalData(i.."id",0)
+            if x ~= 0 then
+                tasks[i] = x
+                idName[x] = readLocalData(i.."name","")
+                idTime[x] = readLocalData(i.."time",0)
+            end
+        end
+    end
+
 end
 
 -- This function gets called once every frame
@@ -130,6 +150,12 @@ function draw()
                 fill(temp)
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
+                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) == WIDTH/2+HEIGHT/4 then
+                        --stops time
+                        stopgo = false
+                        temp2 = window2()
+                        showWindow = true
+                    end
                     fill(0,0,0,130)
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20)
                     starti.z = i
@@ -150,6 +176,13 @@ function draw()
                 fill(temp)
                 strokeWidth(0)
                 if (i-starti.z)/(2*math.pi) >= 30/total then
+                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) == WIDTH/2+HEIGHT/4 then
+                    --stops time
+                        stopgo = false
+                        temp2 = window2()
+                        showWindow = true
+                    end
+
                     fill(0,0,0,130)
                     ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),20)
                     starti.z = i
@@ -173,9 +206,10 @@ function draw()
         --checks time flag
         if stopgo then
             --iterates a frame forward
-            timego = timego +1/60
+            --timego = timego +1/60
+            timego = timego+1
             tint(255)
-            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/3)
+            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/3)
             if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
                 touchbegan = false
                 stopgo = false
@@ -185,8 +219,9 @@ function draw()
                 touchbegan = false
                 stopgo = true
             end
-            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/3)
+            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/3)
         end
+        sprite("Project:HandArrow",WIDTH*3/4,HEIGHT/2.18,WIDTH/8)
     end
     
     --Check if we are on select screen
@@ -345,7 +380,10 @@ function draw()
         text(input,WIDTH/2,HEIGHT/4*3)
     end
     
-    
+    if showWindow then
+        temp2:draw()
+        showWindow = temp2:canClose()
+    end
 backup()
 end
 
@@ -353,9 +391,10 @@ function backup()
     saveLocalData("size",#tasks)
     for i,x in ipairs(tasks) do
         saveLocalData(i.."id",x)
-        saveLocalData(i.."name",idName(x))
+        saveLocalData(i.."name",idName[x])
         saveLocalData(i.."time",idTime[x])
     end
+    saveLocalData("timego",timego)
 end
 
 
@@ -369,3 +408,85 @@ function keyboard(key)
         input = ""
     end
 end
+
+window1 = class()
+
+function window1:init(tasks,identity,names,times)
+    showing = true
+    deleting = false
+    t = tasks
+    id = identity
+    n = names
+    ti = times
+    speech.say("Time to take a break")
+end
+
+function window1:draw()
+    fill(0,0,0,35)
+    rectMode(CORNER)
+    rect(0,0,WIDTH,HEIGHT)
+    fill(255)
+    rectMode(CENTER)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/8,HEIGHT/4)
+    fill(0)
+    text("You Completed a Task",WIDTH/2,HEIGHT/4*3.4)
+    text("Do You Need More Time",WIDTH/2,HEIGHT/4*3)
+end
+
+function window1:canClose()
+    if CurrentTouch.state == BEGAN then
+        showing = false
+    end
+    return showing
+end
+
+function window1:close()
+    if deleting then
+        for i,x in ipairs(t) do
+            if x == id then
+                table.remove(n,x)
+                table.remove(ti,x)
+                table.remove(t,i)
+                break
+            end
+        end
+    end
+    return t
+end
+
+function window1:close2()
+    return n
+end
+
+function window1:close3()
+    return ti
+end
+
+
+
+window2 = class()
+
+function window2:init()
+showing = true
+speech.say("Time to take a break")
+end
+
+function window2:draw()
+fill(0,0,0,35)
+rectMode(CORNER)
+rect(0,0,WIDTH,HEIGHT)
+fill(255)
+rectMode(CENTER)
+rect(WIDTH/2,HEIGHT*3/4,WIDTH/8,HEIGHT/4)
+fill(0)
+text("Time to take a break",WIDTH/2,HEIGHT/4*3.4)
+text("Tap to Continue",WIDTH/2,HEIGHT/4*3)
+end
+
+function window2:canClose()
+if CurrentTouch.state == BEGAN then
+showing = false
+end
+return showing
+end
+
