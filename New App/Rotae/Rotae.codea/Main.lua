@@ -226,6 +226,8 @@ function draw()
                 stopgo=false
 
                 --launch window 1
+                temp2=window1
+                showWindow=true
 
                 --If extra time selected, automatically add a single 15 minute long task
 
