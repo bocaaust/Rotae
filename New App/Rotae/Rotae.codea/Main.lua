@@ -1,7 +1,9 @@
 -- Rotae
 displayMode(FULLSCREEN)
+
 -- Use this function to perform your initial setup
 function setup()
+    clearLocalData()
     --tasks = {11111,22222,333333}
     tasks = {}
     font("KozGoPro-Light")
@@ -103,6 +105,8 @@ function draw()
         --Check if we have more than one task
         if #tasks > 1 then
             while i <= math.pi*2+.03 do
+
+
                 if start then
                     start = false
                     starti.x = i
@@ -129,18 +133,10 @@ function draw()
                     --comparison between position difference over total of circle and time section over summation of time
                     if i-starti.x > 0 then
                         if (i-starti.x)/(math.pi*2) >= (idTime[tasks[starti.y]]/total) then
-                            if math.cos(i+(timego-cTime)/(total*60)) >= .99 and temp3 == nil then
-                            --launch window 1
-                                temp3=window1(tasks,tasks[starti.y],idName,idTime)
-                                showWindow2 =true
-                            else
-                                temp3 = nil
-
-                            end
 
                             start = true
                             points[3] = vec2(WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
-
+                        end
                     end
                 end
                 if start then
@@ -158,6 +154,17 @@ function draw()
                     --if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.03 then
                     --showWindow2= true
                     --end
+if (math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= .99 or math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= .99) and temp3 == nil then
+--launch window 1
+temp3=window1(tasks,tasks[starti.y],idName,idTime)
+showWindow2 =true
+--stopgo = false
+else
+temp3 = nil
+
+
+end
+
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
@@ -463,6 +470,7 @@ function draw()
         showWindow2 = temp3:canClose()
         if CurrentTouch.state == BEGAN then
             showWindow2 = false
+            stopgo = true
             tasks = temp3:close()
             idName = temp3:close2()
             idTime = temp3:close3()
@@ -512,7 +520,7 @@ end
 
 --Draw window
 function window1:draw()
-    if showing and yes and id ~= nil then
+    --if showing and yes and id ~= nil then
     textMode(CENTER)
     --Black screen
     fill(0,0,0,35)
@@ -533,7 +541,8 @@ function window1:draw()
 
     rectMode(CORNER)
     textMode(CORNER)
-    end
+
+--end
 end
 
 --check if window can close
