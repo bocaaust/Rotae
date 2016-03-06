@@ -218,10 +218,6 @@ function draw()
                 --  screen = 1
                 -- end
             end
-            if i>math.pi*2+.07 then
-                stopgo=false
-                window1.draw()
-            end
 
         end
         if #tasks == 0 then
