@@ -325,6 +325,11 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = MyCompany;
+				TargetAttributes = {
+					DB8A004216F2DBDA005F87A6 = {
+						DevelopmentTeam = GP8729KYLX;
+					};
+				};
 			};
 			buildConfigurationList = DB8A003E16F2DBDA005F87A6 /* Build configuration list for PBXProject "Rotae" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -475,6 +480,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rotae/Rotae-Prefix.pch";
 				INFOPLIST_FILE = "Rotae/Rotae-Info.plist";
@@ -498,6 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rotae/Rotae-Prefix.pch";
 				INFOPLIST_FILE = "Rotae/Rotae-Info.plist";
