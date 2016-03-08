@@ -5,6 +5,7 @@ displayMode(FULLSCREEN_NO_BUTTONS)
 function setup()
     --clearLocalData()
     --tasks = {11111,22222,333333}
+    xw = WIDTH/1024
     tasks = {}
     font("KozGoPro-Light")
     idName = {}
@@ -28,6 +29,7 @@ function setup()
     hasTouched = false
     stopgo = true
     timego = readLocalData("timego",0)
+    begantime = timego
     touchbegan = true
     receive()
     if #tasks > 0 then
@@ -154,28 +156,36 @@ function draw()
                     --if WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.03 then
                     --showWindow2= true
                     --end
-if (math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= .99 or math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= .99) and temp3 == nil then
+                    if timego-begantime > 240 then
+if (math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi) >= .99 or math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= .99) then
+                        if temp3 == nil then
 --launch window 1
 temp3=window1(tasks,tasks[starti.y],idName,idTime)
 showWindow2 =true
 --stopgo = false
+                            else
+                            temp3:setID(tasks[starti.y])
+                            end
 else
 temp3 = nil
 
 
 end
+                        end
 
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
-                    fontSize(25)
+                    fontSize(xw*25)
                     --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
                     --text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
                 end
                 --Pick random seed based off of id
                 math.randomseed(tasks[starti.y])
-                
+                if math.sin(i+(timego-cTime)) >0 and math.sin(i+(timego-cTime)) < .1  and math.cos(i+(timego-cTime)) > .8 and temp3 ~= nil then
+                    temp3:setID(tasks[starti.y])
+                end
                 --Pick random color (150-255) is in pastel range
                 temp = color(math.random(150,255),math.random(150,255),math.random(150,255),255)
                 stroke(temp)
@@ -187,7 +197,7 @@ end
                     timecheck = ElapsedTime
                 end
                 if (i-starti.z)/(2*math.pi) >= 30/total then
-                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.02 and temp2 == nil and showWindow == false and ElapsedTime-timecheck > 3 then
+                    if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.02 and temp2 == nil and showWindow == false and ElapsedTime-timecheck > 3 and timego-begantime > 240 then
                         --stops time
                         stopgo = false
                         if temp2 == nil then
@@ -197,10 +207,10 @@ end
                         i = i - .06
                     end
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
                 end
 
 
@@ -208,7 +218,7 @@ end
             end
 
             --Before we go to the next frame, check if timego-cTime is equal to start time of second task in seconds
-            if timego-cTime == idTime[tasks[#tasks]] then
+            if timego-cTime == idTime[tasks[starti.y]] then
                 --stop
                 stopgo=false
 
@@ -244,17 +254,17 @@ end
                     end
                     
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),20)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i)+math.cos((timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i)+math.sin((timego-cTime)/(total*60)*2*math.pi),10)
+                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
                 end
-                -- fontSize(40)
+                -- fontSize(xw*40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
                 i = i +.01
                 -- else
                 --  fill(255, 255, 255, 255)
-                --  fontSize(40)
+                --  fontSize(xw*40)
                 --   text("Tap + to add a task",WIDTH/2,HEIGHT/2)
                 --  screen = 1
                 -- end
@@ -276,7 +286,7 @@ end
             screen = 1
         end
         --checks time flag
-        if stopgo then
+        if stopgo and temp3 == nil then
             --iterates a frame forward
             timego = timego +1/60
             --timego = timego+1
@@ -293,7 +303,7 @@ end
             end
             sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/4)
         end
-        sprite("Project:HandArrow",WIDTH*3/4,HEIGHT/2.18,WIDTH/8)
+        sprite("Project:HandArrow",WIDTH/2+HEIGHT/4+WIDTH/16,HEIGHT/2.18,WIDTH/8)
         
         
     end
@@ -388,7 +398,7 @@ end
         end
         rect(0,0,WIDTH/2,HEIGHT/4)
         fill(255)
-        fontSize(70)
+        fontSize(xw*70)
         --Draw instructional text
         textMode(CORNER)
         text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
@@ -409,11 +419,11 @@ end
         textMode(CENTER)
         
         --Draw +
-        fontSize(180)
+        fontSize(xw*180)
         text("+",WIDTH*3/4,HEIGHT/4*3)
         
         --Draw -
-        fontSize(240)
+        fontSize(xw*240)
         text("-",WIDTH*3/4,HEIGHT/4)
         
     end
@@ -450,7 +460,7 @@ end
         stroke(125)
         rect(WIDTH/4,HEIGHT*3/4-HEIGHT/32,WIDTH/2,HEIGHT/16)
         fill(0)
-        fontSize(20)
+        fontSize(xw*20)
         text(input,WIDTH/2,HEIGHT/4*3)
     end
     
@@ -473,7 +483,11 @@ end
             stopgo = true
             tasks = temp3:close()
             idName = temp3:close2()
-            idTime = temp3:close3()
+            --if (temp3:close3())[temp3.id] ~= nil then
+            --idTime[temp3.id] = (temp3:close3())[temp3.id]
+                --else
+                idTime = temp3:close3()
+            --    end
             temp3 = nil
             checkTime = ElapsedTime
         end
@@ -484,9 +498,11 @@ end
 function backup()
     saveLocalData("size",#tasks)
     for i,x in ipairs(tasks) do
+        if idTime[x] ~= nil then
         saveLocalData(i.."id",x)
         saveLocalData(i.."name",idName[x])
         saveLocalData(i.."time",idTime[x])
+            end
     end
     saveLocalData("timego",timego)
 end
@@ -530,7 +546,7 @@ function window1:draw()
     --White box
     fill(255)
     rectMode(CENTER)
-    rect(WIDTH/2,HEIGHT*3/4,WIDTH/3,HEIGHT/4)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/8+textSize("Do You Need More Time?"),HEIGHT/4)
     
     --Black text
     fill(0)
@@ -608,6 +624,10 @@ function window1:close3()
     return ti
 end
 
+function window1:setID(input)
+    id = input
+end
+
 
 --Break notification
 window2 = class()
@@ -626,7 +646,7 @@ function window2:draw()
     --White box
     fill(255)
     rectMode(CENTER)
-    rect(WIDTH/2,HEIGHT*3/4,WIDTH/4,HEIGHT/4)
+    rect(WIDTH/2,HEIGHT*3/4,WIDTH/8+textSize("Time to take a break"),HEIGHT/4)
 
     --Black text
     fill(0)
