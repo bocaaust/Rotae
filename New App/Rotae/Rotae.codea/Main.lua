@@ -177,7 +177,11 @@ end
                     line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
+                    if (xw*25) >= 12 then
                     fontSize(xw*25)
+                    else
+                    fontSize(12)
+                    end
                     --fill(math.random(0,255),math.random(0,255),math.random(0,255),255)
                     --text(idName[tasks[starti.y]],(points[2].x+points[3].x)/2,(points[2].y+points[3].y+points[1].y)/3)
                 end
@@ -398,7 +402,11 @@ end
         end
         rect(0,0,WIDTH/2,HEIGHT/4)
         fill(255)
+        if (xw*70 >= 20) then
         fontSize(xw*70)
+        else
+        fontSize(20)
+        end
         --Draw instructional text
         textMode(CORNER)
         text("Estimate",WIDTH/8,HEIGHT*7.1/8-HEIGHT*.3/8)
@@ -460,7 +468,11 @@ end
         stroke(125)
         rect(WIDTH/4,HEIGHT*3/4-HEIGHT/32,WIDTH/2,HEIGHT/16)
         fill(0)
+        if (xw*20 >= 12) then
         fontSize(xw*20)
+        else
+        fontSize(12)
+        end
         text(input,WIDTH/2,HEIGHT/4*3)
     end
     
