@@ -13,7 +13,7 @@ function setup()
     timecheck = ElapsedTime-3
     idTime = {}
     starti = vec3(0,0,0)
-    i = 0
+    i = 0.3
     total = 0
     speech.rate = .3
     cTime = 0
@@ -71,7 +71,7 @@ function draw()
         --Draw circle with white outline
         stroke(255)
         fill(125)
-        ellipse(WIDTH/2,HEIGHT/2,HEIGHT/2)
+        ellipse(WIDTH/2.2,HEIGHT/2,HEIGHT/2)
         
         i = 0
         total = 0
@@ -173,8 +173,8 @@ temp3 = nil
 end
                         end
 
-                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
-                    line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
+                    line(WIDTH/2.2,HEIGHT/2,WIDTH/2.2+HEIGHT/4*math.cos((points[2].x)+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin((points[2].y)+(timego-cTime)/(total*60)*2*math.pi))
+                    line(WIDTH/2.2,HEIGHT/2,WIDTH/2.2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi))
                     --line(WIDTH/2,HEIGHT/2,WIDTH/2+HEIGHT/4*math.cos(i),HEIGHT/2+HEIGHT/4*math.sin(i))
                     --line(points[3].x,points[3].y,points[2].x,points[2].y)
                     if (xw*25) >= 12 then
@@ -211,10 +211,10 @@ end
                         i = i - .06
                     end
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
+                    ellipse(WIDTH/2.2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
+                    ellipse(WIDTH/2.2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
                 end
 
 
@@ -249,7 +249,7 @@ end
                 if (i-starti.z)/(2*math.pi) >= 30/total then
                     if WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi) >= WIDTH/2+HEIGHT/4-.02 and temp2 == nil and ElapsedTime-timecheck > 3 then
                         --stops time
-                        i = i - .08
+                        --i = i - .08
                         stopgo = false
                         if temp2 == nil then
                             temp2 = window2()
@@ -258,10 +258,10 @@ end
                     end
                     
                     fill(0,0,0,130)
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
+                    ellipse(WIDTH/2.2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),20*xw)
                     starti.z = i
                 else
-                    ellipse(WIDTH/2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
+                    ellipse(WIDTH/2.2+HEIGHT/4*math.cos(i+(timego-cTime)/(total*60)*2*math.pi),HEIGHT/2+HEIGHT/4*math.sin(i+(timego-cTime)/(total*60)*2*math.pi),10*xw)
                 end
                 -- fontSize(xw*40)
                 --text(idName[tasks[1]],WIDTH/2,HEIGHT/2)
@@ -295,7 +295,7 @@ end
             timego = timego +1/60
             --timego = timego+1
             tint(255)
-            sprite("Project:Stop",WIDTH/2,HEIGHT/2,HEIGHT/4)
+            sprite("Project:Stop",WIDTH/2.2,HEIGHT/2,HEIGHT/4)
             if CurrentTouch.state == BEGAN and CurrentTouch.x > WIDTH/2-HEIGHT/4 and CurrentTouch.x < WIDTH/2+HEIGHT/4 and CurrentTouch.y > HEIGHT/4 and CurrentTouch.y < HEIGHT*3/4 and touchbegan then
                 touchbegan = false
                 stopgo = false
@@ -305,9 +305,9 @@ end
                 touchbegan = false
                 stopgo = true
             end
-            sprite("Project:Go",WIDTH/2,HEIGHT/2,HEIGHT/4)
+            sprite("Project:Go",WIDTH/2.2,HEIGHT/2,HEIGHT/4)
         end
-        sprite("Project:HandArrow",WIDTH/2+HEIGHT/4+WIDTH/16,HEIGHT/2.18,WIDTH/8)
+        sprite("Project:HandArrow",WIDTH/2.2+HEIGHT/4+WIDTH/16,HEIGHT/2.18,WIDTH/8)
         
         
     end
